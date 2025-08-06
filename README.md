@@ -1,1 +1,23 @@
 # AutoPost-Agent
+
+# Project Pre-Requisites:-
+
+
+# OpenAI Configuration
+OPENAI_API_KEY = ""
+
+# Twitter API Configuration
+TWITTER_CONSUMER_KEY = ""
+TWITTER_CONSUMER_SECRET = ""
+TWITTER_ACCESS_TOKEN = ""
+TWITTER_ACCESS_TOKEN_SECRET = ""
+TWITTER_BEARER_TOKEN = ""
+
+# LinkedIn API Configuration
+LINKEDIN_CLIENT_ID = ""
+LINKEDIN_CLIENT_SECRET = ""
+LINKEDIN_ACCESS_TOKEN = ""
+LINKEDIN_PERSON_URN = ""
+
+
+Move To project DIR and run `uv sync`
