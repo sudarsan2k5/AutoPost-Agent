@@ -1,5 +1,48 @@
 import requests
-from config import LINKEDIN_ACCESS_TOKEN, LINKEDIN_PERSON_URN, TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET, TWITTER_ACCESS_TOKEN, TWITTER_ACCESS_TOKEN_SECRET
+import tweepy
+import openai
+from config import LINKEDIN_ACCESS_TOKEN, LINKEDIN_PERSON_URN, TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET, TWITTER_ACCESS_TOKEN, TWITTER_ACCESS_TOKEN_SECRET, OPENAI_API_KEY
+
+def generate_social_content(topic: str, platform: str) -> str:
+    """Generate engaging social media content using AI"""
+    if platform.lower() == "linkedin":
+        prompt = f"""
+        Create an engaging LinkedIn post about {topic}.
+        Requirements:
+        - Professional yet engaging tone
+        - Include valuable insights or tips
+        - Add relevant hashtags (3-5)
+        - Include a call-to-action
+        - Keep it under 1000 characters
+        - Make it thought-provoking
+        """
+    elif platform.lower() == "twitter":
+        prompt = f"""
+        Create an engaging Twitter post about {topic}.
+        Requirements:
+        - Catchy and concise
+        - Include relevant hashtags (2-3)
+        - Keep it under 280 characters
+        - Make it shareable and engaging
+        - Add a hook or interesting angle
+        """
+    else:
+        prompt = f"Create an engaging social media post about {topic}."
+    try:
+        client = openai.OpenAI(api_key=OPENAI_API_KEY)
+        response = client.chat.completions.create(
+            model="gpt-4",
+            messages=[
+                {"role": "system", "content": "You are a social media expert who creates engaging, viral-worthy content."},
+                {"role": "user", "content": prompt}
+            ],
+            temperature=0.7,
+            max_tokens=500
+        )
+        return response.choices[0].message.content.strip()
+    except Exception as e:
+        return f"Error generating content: {str(e)}"
+
 
 # Setup LinkedIn API
 def call_linkedin(topic: str) -> str:
